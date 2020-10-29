@@ -7,6 +7,8 @@ Optionally user can give a second argument as the name of the file where games r
 In case user doesn't know how to properly use the application, there is a manual available that is activated by passing one of the flags:
 * -h
 * --help
+### App UML Diagram
+![UML](https://github.com/WojtekMs/testing/blob/master/bowling/img/UML.png)
 
 ### How to build app
 1. `git clone https://github.com/WojtekMs/testing`
