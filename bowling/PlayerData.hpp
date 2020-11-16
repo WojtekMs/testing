@@ -16,7 +16,7 @@ class PlayerData {
     bool isBadCharacter(char) const;
 
    public:
-    PlayerData() = default;
+    PlayerData() = delete;
     PlayerData(const std::string& n, const std::vector<Frame>& r);
     bool operator==(const PlayerData& rhs) const;
     size_t countPoints() const;
