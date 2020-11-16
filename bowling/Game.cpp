@@ -70,19 +70,19 @@ Frame Game::getRegularFrame(const std::string& rolls, int currentRoll) const {
 
 void Game::incrementCharForStrike(int& currentRoll, int frameNumber) const {
     currentRoll += 2;
-    if (isLastFrame(frameNumber)) {
+    if (isLastRegularFrame(frameNumber)) {
         currentRoll++;
     }
 }
 
 void Game::incrementCharForSpare(int& currentRoll, int frameNumber) const {
     currentRoll += 3;
-    if (isLastFrame(frameNumber)) {
+    if (isLastRegularFrame(frameNumber)) {
         currentRoll++;
     }
 }
 
-bool Game::isLastFrame(int frameNumber) const {
+bool Game::isLastRegularFrame(int frameNumber) const {
     return frameNumber == 10;
 }
 

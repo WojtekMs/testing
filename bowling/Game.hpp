@@ -21,7 +21,7 @@ class Game {
 
     std::vector<Frame> getPlayerRolls(std::ifstream& file);
     std::vector<Frame> getFrames(const std::string& line);
-    bool isLastFrame(int frameCount) const;
+    bool isLastRegularFrame(int frameNumber) const;
     bool isStrike(char currentRoll) const;
     bool isSpare(char nextRoll) const;
     Frame getRegularFrame(const std::string& rolls, int currentRoll) const;
