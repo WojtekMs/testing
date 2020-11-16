@@ -48,7 +48,8 @@ target_link_libraries(${PROJECT_NAME} src)
 
 set(TEST_FILES tests/bowling_tests_gt.cpp 
                tests/bowling_alley_tests_gt.cpp
-               tests/frame_tests.cpp)
+               tests/frame_tests.cpp
+               tests/player_tests.cpp)
 
 enable_testing()
 add_executable(${PROJECT_NAME}-ut ${TEST_FILES})

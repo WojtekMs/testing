@@ -180,40 +180,6 @@ TEST_F(GameTests, getGameStatusShouldReturnInProgressWhenOnePlayerHasLessThan10F
     EXPECT_EQ(game.getGameStatus(), Game::Status::IN_PROGRESS);
 }
 
-TEST_F(GameTests, countPointsFromVectorOfFramesWithoutStrikeNorSpareIncompleteGame) {
-    std::vector<Frame> playerRolls{{'1', '2'}, {'4', '5'}, {'2', '2'}, {'7', '0'}};
-    PlayerData player(defaultPlayerName, playerRolls);
-    EXPECT_EQ(player.countPoints(), 23);
-}
-
-TEST_F(GameTests, countPointsFromVectorOfFramesWithStrikeWithoutSpareIncompleteGame) {
-    std::vector<Frame> playerRolls{{'X', ' '}, {'4', '5'}, {'X', ' '}, {'X', ' '}, {'1', '1'}, {'X', ' '}};
-    PlayerData player(defaultPlayerName, playerRolls);
-    EXPECT_EQ(player.countPoints(), 72);
-}
-
-TEST_F(GameTests, countPointsFromVectorOfFramesWithSpareWithoutStrikeIncompleteGame) {
-    std::vector<Frame> playerRolls{{'2', '/'}, {'4', '5'}, {'3', '/'}, {'2', '/'}, {'0', '/'}};
-    PlayerData player(defaultPlayerName, playerRolls);
-    EXPECT_EQ(player.countPoints(), 55);
-}
-
-TEST_F(GameTests, countPointsFromVectorOfFramesCompleteGameWithStrikeSpareAndExtraFrame) {
-    std::vector<Frame> playerRolls{{'X', ' '},
-                                   {'4', '5'},
-                                   {'X', ' '},
-                                   {'X', ' '},
-                                   {'1', '1'},
-                                   {'X', ' '},
-                                   {'5', '/'},
-                                   {'X', ' '},
-                                   {'1', '8'},
-                                   {'X', ' '},
-                                   {'5', '1'}};
-    PlayerData player(defaultPlayerName, playerRolls);
-    EXPECT_EQ(player.countPoints(), 152);
-}
-
 TEST_F(GameTests, gameReturnsOutputStringWithManyPlayers) {
     file << "Name1:X|41|3\n";
     file << "Name2:\n";
