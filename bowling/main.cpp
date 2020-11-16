@@ -26,6 +26,7 @@ void printManual() {
 
 int main(int argc, const char** argv) {
     if (argc <= 1) {
+        printManual();
         return -1;
     }
     if (isHelpFlag(argc, argv)) {
