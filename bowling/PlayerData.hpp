@@ -9,11 +9,10 @@ class PlayerData {
     std::string name{};
     std::vector<Frame> rolls{};
 
-    std::vector<Frame> conversionCharNumbersToInt(const std::vector<Frame>& rolls) const;
-    size_t countFramesWithoutStrikeOrSpare(const std::vector<Frame>& rolls) const;
-    size_t countOnlyStrikeFrames(const std::vector<Frame>& rolls) const;
-    size_t countOnlySpareFrames(const std::vector<Frame>& rolls) const;
+    size_t countBonusStrikePoints(size_t frameIndex, int depth = 2) const;
+    size_t countBonusSparePoints(size_t frameIndex) const;
     bool isBadCharacter(char) const;
+    bool isRegularFrame(int frameIndex) const;
 
    public:
     PlayerData() = delete;

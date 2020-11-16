@@ -6,6 +6,7 @@ class Frame {
     char firstRoll{' '};
     char secondRoll{' '};
 
+    bool isBadCharacter(char) const;
    public:
     Frame() = default;
     Frame(char first, char second);
@@ -15,6 +16,8 @@ class Frame {
     char getSecondRoll() const;
     bool isSpare() const;
     bool isStrike() const;
+    size_t getPoints() const;
+    size_t getFirstRollPoints() const;
 };
 
 

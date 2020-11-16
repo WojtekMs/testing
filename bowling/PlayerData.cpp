@@ -17,85 +17,52 @@ const std::string& PlayerData::getName() const {
     return name;
 }
 
-size_t PlayerData::countFramesWithoutStrikeOrSpare(const std::vector<Frame>& rolls) const {
-    size_t totalPointsWithoutStrikeNorSpare = 0;
-    for (size_t i = 0; i < rolls.size(); i++) {
-        if (!rolls[i].isStrike() && !rolls[i].isSpare()) {
-            totalPointsWithoutStrikeNorSpare += (rolls[i].getFirstRoll() + rolls[i].getSecondRoll());
-        }
+size_t PlayerData::countBonusStrikePoints(size_t frameIndex, int depth) const {
+    size_t strikePoints = 0;
+    if (!isRegularFrame(frameIndex)) {
+        return 0;
     }
-    return totalPointsWithoutStrikeNorSpare;
+    if (frameIndex + 1 == rolls.size()) {
+        return 0;
+    }
+    if (rolls[frameIndex + 1].isStrike()) {
+        strikePoints += 10;
+        if (frameIndex + 2 != rolls.size()) {
+            strikePoints += rolls[frameIndex + 2].getFirstRollPoints();
+        }
+    } else {
+        strikePoints += rolls[frameIndex + 1].getPoints();
+    }
+    return strikePoints;
 }
 
-size_t PlayerData::countOnlyStrikeFrames(const std::vector<Frame>& rolls) const {
-    size_t totalOnlyStrikePoints = 0;
-    for (size_t i = 0; i < rolls.size(); i++) {
-        if (rolls[i].isStrike()) {
-            totalOnlyStrikePoints += 10;
-            if ((i + 1) != rolls.size()) {
-                if (rolls.at(i + 1).isStrike() || rolls.at(i + 1).isSpare()) {
-                    totalOnlyStrikePoints += 10;
-                } else {
-                    totalOnlyStrikePoints += (rolls[i + 1].getFirstRoll() + rolls[i + 1].getSecondRoll());
-                }
-            }
-        }
+size_t PlayerData::countBonusSparePoints(size_t frameIndex) const {
+    if (!isRegularFrame(frameIndex)) {
+        return 0;
     }
-    return totalOnlyStrikePoints;
-}
-
-size_t PlayerData::countOnlySpareFrames(const std::vector<Frame>& rolls) const {
-    size_t totalOnlySparePoints = 0;
-    for (size_t i = 0; i < rolls.size(); i++) {
-        if (rolls[i].isSpare()) {
-            totalOnlySparePoints += 10;
-            if ((i + 1) != rolls.size()) {
-                if (rolls.at(i + 1).isStrike()) {
-                    totalOnlySparePoints += 10;
-                } else {
-                    totalOnlySparePoints += rolls[i + 1].getFirstRoll();
-                }
-            }
-        }
+    if (frameIndex + 1 == rolls.size()) {
+        return 0;
     }
-    return totalOnlySparePoints;
+    return rolls[frameIndex + 1].getFirstRollPoints();
 }
 
 size_t PlayerData::countPoints() const {
     size_t totalPoints = 0;
-    auto convertedRolls = conversionCharNumbersToInt(rolls);
-    totalPoints += countFramesWithoutStrikeOrSpare(convertedRolls);
-    totalPoints += countOnlyStrikeFrames(convertedRolls);
-    totalPoints += countOnlySpareFrames(convertedRolls);
+    for (size_t i = 0; i < rolls.size(); ++i) {
+        if (rolls[i].isStrike()) {
+            totalPoints += countBonusStrikePoints(i);
+        } else if (rolls[i].isSpare()) {
+            totalPoints += countBonusSparePoints(i);
+        }
+        if (isRegularFrame(i)) {
+            totalPoints += rolls[i].getPoints();
+        }
+    }
     return totalPoints;
 }
 
-std::vector<Frame> PlayerData::conversionCharNumbersToInt(const std::vector<Frame>& rolls) const {
-    std::vector<Frame> convertedRolls{};
-    Frame currentFrame{};
-    char conversionNumber = '0';
-    size_t firstRoll{};
-    size_t secondRoll{};
-    for (size_t i = 0; i < rolls.size(); i++) {
-        firstRoll = rolls[i].getFirstRoll();
-        secondRoll = rolls[i].getSecondRoll();
-        if (!rolls[i].isStrike() && !rolls[i].isSpare()) {
-            firstRoll = (rolls[i].getFirstRoll() - conversionNumber);
-            secondRoll = (rolls[i].getSecondRoll() - conversionNumber);
-        }
-        if (rolls[i].isSpare()) {
-            firstRoll = (rolls[i].getFirstRoll() - conversionNumber);
-        }
-        if (isBadCharacter(rolls[i].getFirstRoll())) {
-            firstRoll = 0;
-        }
-        if (isBadCharacter(rolls[i].getSecondRoll())) {
-            secondRoll = 0;
-        }
-        currentFrame = (Frame(firstRoll, secondRoll));
-        convertedRolls.push_back(currentFrame);
-    }
-    return convertedRolls;
+bool PlayerData::isRegularFrame(int frameIndex) const {
+    return frameIndex >= 0 && frameIndex <= 9;
 }
 
 bool PlayerData::isBadCharacter(char roll) const {

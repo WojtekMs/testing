@@ -2,6 +2,10 @@
 
 #include "Frame.hpp"
 
+class FrameTest : public ::testing::TestWithParam<std::pair<Frame, int>> {
+   protected:
+};
+
 TEST(FrameTest, defaultFrameShouldBeEmpty) {
     Frame defaultFrame;
     EXPECT_EQ(defaultFrame.getFirstRoll(), ' ');
@@ -45,3 +49,25 @@ TEST(FrameTest, whenBothRollsAreNotEqualComparisonOperatorShouldReturnFalse) {
     Frame secondFrame('3', '2');
     EXPECT_FALSE(firstFrame == secondFrame);
 }
+
+TEST_P(FrameTest, getPointsShouldReturnCalculatedPointsForOneFrame) {
+    auto [frame, expectedPoints] = GetParam();
+    auto actualPoints = frame.getPoints();
+    EXPECT_EQ(expectedPoints, actualPoints);
+}
+
+INSTANTIATE_TEST_SUITE_P(calculatingManyScores,
+                         FrameTest,
+                         testing::Values(std::pair<Frame, int>{{'3', '3'}, 6},
+                                         std::pair<Frame, int>{{'1', '3'}, 4},
+                                         std::pair<Frame, int>{{'0', '/'}, 10},
+                                         std::pair<Frame, int>{{'X', ' '}, 10},
+                                         std::pair<Frame, int>{{'3', '\0'}, 3},
+                                         std::pair<Frame, int>{{'3', '-'}, 3},
+                                         std::pair<Frame, int>{{'3', ' '}, 3},
+                                         std::pair<Frame, int>{{'0', '-'}, 0},
+                                         std::pair<Frame, int>{{'5', '/'}, 10},
+                                         std::pair<Frame, int>{{'3', '6'}, 9},
+                                         std::pair<Frame, int>{{' ', ' '}, 0},
+                                         std::pair<Frame, int>{{' ', '\0'}, 0},
+                                         std::pair<Frame, int>{{' ', '-'}, 0}));

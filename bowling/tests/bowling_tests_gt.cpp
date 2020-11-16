@@ -14,9 +14,10 @@ class GameTests : public ::testing::Test {
     std::string defaultPlayerName{"defaultPlayer"};
 
     void SetUp() override {
+        std::filesystem::remove(filePath);
+        file.close();
         std::string fileName = "/test_file.txt";
         filePath = std::filesystem::current_path().string() + fileName;
-        file.close();
         file.open(filePath, std::ios_base::out);
     }
 
