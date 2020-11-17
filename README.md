@@ -8,9 +8,8 @@ In case user doesn't know how to properly use the application, there is a manual
 * -h
 * --help
 ### App UML Diagram
-<div hidden>
-```
-@startuml BowlingUML
+<!-- 
+@startuml ./bowling/uml/BowlingUML
 class PlayerData{
     -std::string name{};
     -std::vector<Frame> rolls{};
@@ -71,10 +70,9 @@ Game *-- PlayerData
 PlayerData *-- Frame
 BowlingAlley o-- Game
 @enduml
-```
-</div>
+-->
 
-![](bowling/uml/BowlingUML.svg)
+![UML](./bowling/uml/BowlingUML.svg)
 
 ### How to build app
 1. `git clone https://github.com/WojtekMs/testing`
