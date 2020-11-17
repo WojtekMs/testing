@@ -18,17 +18,14 @@ void Game::loadFromFile(const std::string& filePath) {
     if (!file.good()) {
         throw std::invalid_argument("file " + filePath + " could not be opened!\n");
     }
+    players.clear();
     while (!file.eof()) {
         std::string playerName{};
         std::vector<Frame> playerRolls{};
         std::getline(file, playerName, ':');
         playerRolls = getPlayerRolls(file);
         if (!file.eof()) {
-            if (std::find_if(players.begin(), players.end(), [&](auto& player) {
-                    return player.getName() == playerName && player.getRolls() == playerRolls;
-                }) == players.end()) {
-                players.emplace_back(PlayerData(playerName, playerRolls));
-            }
+            players.emplace_back(PlayerData(playerName, playerRolls));
         }
     }
     file.close();
