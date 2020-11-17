@@ -10,7 +10,7 @@ public:
     BowlingAlley() = delete;
     explicit BowlingAlley(const std::filesystem::path& pathToFolder);
     void loadFromFolder(const std::filesystem::path& pathToFolder);
-    std::string getOutputString();
+    std::string getOutputString() const;
     const std::vector<std::shared_ptr<Game>>& getGames() const;
     
 private:

@@ -30,7 +30,7 @@ class Game {
 
    public:
     Game() = delete;
-    Game(const std::filesystem::path& filePath);
+    explicit Game(const std::filesystem::path& filePath);
     void loadFromFile(const std::string& filePath);
     const std::vector<PlayerData>& getPlayers() const { return players; };
     Status getGameStatus() const;
