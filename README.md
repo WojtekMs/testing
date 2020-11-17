@@ -10,7 +10,7 @@ In case user doesn't know how to properly use the application, there is a manual
 ### App UML Diagram
 <div hidden>
 ```
-@startuml bowling/uml/BowlingUML
+@startuml BowlingUML
 class PlayerData{
     -std::string name{};
     -std::vector<Frame> rolls{};
@@ -74,7 +74,7 @@ BowlingAlley o-- Game
 ```
 </div>
 
-![](bowling/uml/BowlingUML.svg)
+![](BowlingUML.svg)
 
 ### How to build app
 1. `git clone https://github.com/WojtekMs/testing`
