@@ -10,7 +10,7 @@ In case user doesn't know how to properly use the application, there is a manual
 ### App UML Diagram
 <div hidden>
 ```
-@startuml BowlingUML
+@startuml bowling/uml/BowlingUML
 class PlayerData{
     -std::string name{};
     -std::vector<Frame> rolls{};
